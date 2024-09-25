@@ -1,7 +1,8 @@
 import "./App.css";
+import { Button } from "./components/ui/button";
 
 function App() {
-  return <div className="">HI</div>;
+  return <Button variant="outline">Button</Button>;
 }
 
 export default App;
