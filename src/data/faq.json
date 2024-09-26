@@ -1,0 +1,26 @@
+[
+  {
+    "question": "Qu'est-ce que ce site ?",
+    "answer": "Ce site est une application de portail d'emploi qui permet aux entreprises de publier des offres d'emploi et aux utilisateurs de rechercher et postuler à des emplois. Elle offre des fonctionnalités à la fois pour les chercheurs d'emploi et les employeurs, avec des interfaces conviviales et une authentification sécurisée."
+  },
+  {
+    "question": "Comment puis-je publier une offre d'emploi ?",
+    "answer": "En tant qu'employeur, vous pouvez publier une offre d'emploi en accédant à la section 'Publier une offre' après vous être connecté. Remplissez les détails de l'offre d'emploi et soumettez le formulaire pour créer une nouvelle annonce."
+  },
+  {
+    "question": "Comment puis-je rechercher des emplois ?",
+    "answer": "Les chercheurs d'emploi peuvent rechercher des postes par mots-clés, localisation, catégorie et autres filtres en utilisant la barre de recherche sur la page d'accueil ou sur la page dédiée à la recherche d'emploi."
+  },
+  {
+    "question": "Comment puis-je postuler à un emploi ?",
+    "answer": "Pour postuler à un emploi, cliquez sur l'annonce d'emploi et suivez les instructions de candidature fournies. Il se peut que vous deviez télécharger votre CV et fournir des informations supplémentaires."
+  },
+  {
+    "question": "Puis-je enregistrer des offres pour postuler plus tard ?",
+    "answer": "Oui, vous pouvez enregistrer des offres d'emploi en cliquant sur le bouton 'Enregistrer l'offre' dans l'annonce. Les emplois sauvegardés peuvent être consultés dans votre profil, sous la section 'Offres enregistrées'."
+  },
+  {
+    "question": "Comment puis-je suivre mes candidatures ?",
+    "answer": "Les chercheurs d'emploi peuvent suivre l'état de leurs candidatures depuis la section 'Candidatures' de leur profil. Cette section fournit des mises à jour sur l'avancement de chaque candidature."
+  }
+]

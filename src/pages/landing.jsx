@@ -10,7 +10,13 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 
 import companies from "../data/companies.json";
-
+import faqs from "../data/faq.json";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 const LandingPage = () => {
   return (
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
@@ -88,6 +94,14 @@ const LandingPage = () => {
           </CardContent>
         </Card>
       </section>
+      <Accordion type="multiple" className="w-full">
+        {faqs.map((faq, index) => (
+          <AccordionItem key={index} value={`item-${index + 1}`}>
+            <AccordionTrigger>{faq.question}</AccordionTrigger>
+            <AccordionContent>{faq.answer}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </main>
   );
 };
