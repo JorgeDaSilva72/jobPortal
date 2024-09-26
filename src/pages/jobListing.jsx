@@ -71,16 +71,16 @@ const JobListing = () => {
           ) : (
             <div className="flex flex-col items-center justify-center h-64 text-center">
               <h2 className="text-2xl font-bold text-gray-700 mb-4">
-                Aucune offre d'emploi trouvée 😢
+                Aucune offre d&apos;emploi trouvée 😢
               </h2>
               <p className="text-gray-500 mb-6">
-                Désolé, nous n'avons trouvé aucune offre correspondant à votre
-                recherche.
+                Désolé, nous n&apos;avons trouvé aucune offre correspondant à
+                votre recherche.
               </p>
               <div className="flex gap-4">
-                <Link to="/jobs">
+                <Link to="/">
                   <Button variant="blue" className="rounded-lg">
-                    Parcourir les offres
+                    Retour à l&apos;accueil
                   </Button>
                 </Link>
               </div>

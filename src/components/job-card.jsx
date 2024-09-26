@@ -52,6 +52,25 @@ const JobCard = ({
   //   if (savedJob !== undefined) setSaved(savedJob?.length > 0);
   // }, [savedJob]);
 
+  // Ajout fonction
+
+  const getShortDescription = (description) => {
+    // Trouve l'index du premier point
+    const firstPeriodIndex = description.indexOf(".");
+
+    // Si aucun point n'est trouvé, limite à 100 caractères et ajoute "..." si nécessaire
+    if (firstPeriodIndex === -1) {
+      return description.length > 100
+        ? description.substring(0, 100) + "..."
+        : description;
+    }
+
+    // Retourne la description jusqu'au premier point ou 100 caractères si trop longue
+    return firstPeriodIndex > 100
+      ? description.substring(0, 100) + "..."
+      : description.substring(0, firstPeriodIndex + 1);
+  };
+
   return (
     <Card className="flex flex-col">
       {/* {loadingDeleteJob && (
@@ -78,7 +97,8 @@ const JobCard = ({
           </div>
         </div>
         <hr />
-        {job.description.substring(0, job.description.indexOf("."))}.
+        {/* {job.description.substring(0, job.description.indexOf("."))}. */}
+        {getShortDescription(job.description)}
       </CardContent>
       <CardFooter className="flex gap-2">
         <Link to={`/job/${job.id}`} className="flex-1">
