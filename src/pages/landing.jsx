@@ -23,11 +23,11 @@ const LandingPage = () => {
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
       <section className="text-center ">
         <h1 className="flex flex-col items-center justify-center gradient-title font-extrabold text-4xl sm:text-6xl lg:text-8xl tracking-tighter py-4">
-          Trouvez l'emploi de vos rêves.
+          Trouvez l&apos;emploi de vos rêves.
         </h1>
         <p className="text-gray-300 sm:mt-4 text-xs sm:text-xl">
-          Afrique Avenir : Révélez votre potentiel, bâtissez l'Afrique de demain
-          avec les meilleures opportunités d'emploi.
+          Afrique Avenir : Révélez votre potentiel, bâtissez l&apos;Afrique de
+          demain avec les meilleures opportunités d&apos;emploi.
         </p>
       </section>
       <div className="flex flex-col gap-6 justify-center sm:flex-row">
@@ -77,7 +77,7 @@ const LandingPage = () => {
         <Card>
           <CardHeader>
             <CardTitle className="font-bold">
-              Pour les demandeurs d'emploi
+              Pour les demandeurs d&apos;emploi
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -90,8 +90,8 @@ const LandingPage = () => {
             <CardTitle className="font-bold">Pour les employeurs</CardTitle>
           </CardHeader>
           <CardContent>
-            Publiez des offres d'emploi, gérez les candidatures et trouvez les
-            meilleurs candidats.
+            Publiez des offres d&apos;emploi, gérez les candidatures et trouvez
+            les meilleurs candidats.
           </CardContent>
         </Card>
       </section>

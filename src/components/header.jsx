@@ -33,13 +33,13 @@ const Header = () => {
     <>
       <nav className="py-4 flex justify-between items-center">
         <Link to="/">
-          <img src="/logo.jpeg" className="h-20" alt="Logo" />
+          <img src="/logo.jpeg" className="h-20 rounded-full" alt="Logo" />
         </Link>
 
         <div className="flex gap-8">
           <SignedOut>
             <Button variant="outline" onClick={() => setShowSignIn(true)}>
-              Login
+              Se connecter
             </Button>
           </SignedOut>
           <SignedIn>
@@ -47,7 +47,7 @@ const Header = () => {
               <Link to="/post-job">
                 <Button variant="destructive" className="rounded-full">
                   <PenBox size={20} className="mr-2" />
-                  Post a Job
+                  Publier une offre d&apos;emploi
                 </Button>
               </Link>
             )}
@@ -69,7 +69,7 @@ const Header = () => {
                   labelIcon={<Heart size={15} />}
                   href="/saved-jobs"
                 />
-                <UserButton.Action label="Gérer le compte" />
+                <UserButton.Action label="manageAccount" />
               </UserButton.MenuItems>
             </UserButton>
           </SignedIn>
