@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Link } from "react-router-dom";
 import {
   Carousel,
@@ -63,6 +65,29 @@ const LandingPage = () => {
       </Carousel>
 
       <img src="/banner.jpeg" className="w-full" />
+
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-bold">
+              Pour les demandeurs d'emploi
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            Recherchez et postulez à des emplois, suivez les candidatures et
+            bien plus encore.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-bold">Pour les employeurs</CardTitle>
+          </CardHeader>
+          <CardContent>
+            Publiez des offres d'emploi, gérez les candidatures et trouvez les
+            meilleurs candidats.
+          </CardContent>
+        </Card>
+      </section>
     </main>
   );
 };
