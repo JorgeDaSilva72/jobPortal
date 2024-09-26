@@ -49,9 +49,19 @@ const Header = () => {
           <SignedIn>
             {user?.unsafeMetadata?.role === "recruiter" && (
               <Link to="/post-job">
-                <Button variant="destructive" className="rounded-full">
+                {/* <Button variant="destructive" className="rounded-full">
                   <PenBox size={20} className="mr-2" />
                   Publier une offre d&apos;emploi
+                </Button> */}
+                <Button
+                  variant="destructive"
+                  className="rounded-full flex items-center"
+                >
+                  <PenBox size={20} className="mr-2" />
+                  <span className="hidden sm:inline">
+                    Publier une offre d&apos;emploi
+                  </span>
+                  <span className="inline sm:hidden">Publier</span>
                 </Button>
               </Link>
             )}
