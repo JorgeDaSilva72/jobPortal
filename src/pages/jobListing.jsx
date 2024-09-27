@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { State } from "country-state-city";
 import { Country } from "country-state-city";
+import { Search } from "lucide-react";
 
 const JobListing = () => {
   // avant le hook useFetch()
@@ -151,25 +152,30 @@ const JobListing = () => {
   };
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8">
+      <h1 className="gradient-title font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center pb-8">
         Dernières annonces
       </h1>
 
       <form
         onSubmit={handleSearch}
-        className="h-14 flex flex-row w-full gap-2 items-center mb-3"
+        className="h-14 flex flex-col sm:flex-row w-full gap-3 sm:gap-2 items-center mb-4 p-4 shadow-lg rounded-lg"
       >
         <Input
           type="text"
-          placeholder="Rechercher des emplois par titre.."
+          placeholder="Rechercher des emplois par titre..."
           name="search-query"
-          className="h-full flex-1  px-4 text-md"
+          className="h-full flex-1 px-4 py-2 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
         />
-        <Button type="submit" className="h-full sm:w-28" variant="blue">
-          Recherche
+        <Button
+          type="submit"
+          className="h-full w-full sm:w-28 bg-blue-500 text-white rounded-md px-4 py-2 flex items-center justify-center hover:bg-blue-600 transition duration-200"
+          variant="blue"
+        >
+          <Search className="w-5 h-5" />
         </Button>
       </form>
-      <div className="flex flex-col sm:flex-row gap-2">
+
+      <div className="flex flex-col sm:flex-row gap-2 mt-8 sm:mt-4">
         <Select value={location} onValueChange={(value) => setLocation(value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filtrer par pays" />
@@ -180,6 +186,25 @@ const JobListing = () => {
                 return (
                   <SelectItem key={countryName} value={countryName}>
                     {countryName}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select
+          value={company_id}
+          onValueChange={(value) => setCompany_id(value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Filtrer par société" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {companies?.map(({ name, id }) => {
+                return (
+                  <SelectItem key={name} value={id}>
+                    {name}
                   </SelectItem>
                 );
               })}
