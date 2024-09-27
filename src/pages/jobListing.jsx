@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { State } from "country-state-city";
+import { Country } from "country-state-city";
 
 const JobListing = () => {
   // avant le hook useFetch()
@@ -37,6 +38,76 @@ const JobListing = () => {
   const [location, setLocation] = useState("");
   const [company_id, setCompany_id] = useState("");
   const { isLoaded } = useUser();
+
+  // Liste des codes ISO des pays africains
+  const africanCountryCodes = [
+    "DZ",
+    "AO",
+    "BJ",
+    "BW",
+    "BF",
+    "BI",
+    "CM",
+    "CV",
+    "CF",
+    "TD",
+    "KM",
+    "CD",
+    "DJ",
+    "EG",
+    "GQ",
+    "ER",
+    "SZ",
+    "ET",
+    "GA",
+    "GM",
+    "GH",
+    "GN",
+    "GW",
+    "CI",
+    "KE",
+    "LS",
+    "LR",
+    "LY",
+    "MG",
+    "MW",
+    "ML",
+    "MR",
+    "MU",
+    "MA",
+    "MZ",
+    "NA",
+    "NE",
+    "NG",
+    "RW",
+    "ST",
+    "SN",
+    "SC",
+    "SL",
+    "SO",
+    "ZA",
+    "SS",
+    "SD",
+    "TZ",
+    "TG",
+    "TN",
+    "UG",
+    "EH",
+    "ZM",
+    "ZW",
+  ];
+
+  // Récupérer tous les pays
+  const allCountries = Country.getAllCountries();
+
+  // Filtrer uniquement les pays africains
+  const africanCountries = allCountries.filter((country) =>
+    africanCountryCodes.includes(country.isoCode)
+  );
+  // Extraire uniquement les noms des pays africains
+  const africanCountryNames = africanCountries.map((country) => country.name);
+
+  console.log(africanCountryNames);
 
   const {
     // loading: loadingCompanies,
@@ -98,24 +169,24 @@ const JobListing = () => {
           Recherche
         </Button>
       </form>
-      {/* <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <Select value={location} onValueChange={(value) => setLocation(value)}>
           <SelectTrigger>
-            <SelectValue placeholder="Filtrer par emplacement" />
+            <SelectValue placeholder="Filtrer par pays" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {State.getStatesOfCountry("IN").map(({ name }) => {
+              {africanCountryNames.map((countryName) => {
                 return (
-                  <SelectItem key={name} value={name}>
-                    {name}
+                  <SelectItem key={countryName} value={countryName}>
+                    {countryName}
                   </SelectItem>
                 );
               })}
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div> */}
+      </div>
 
       {loadingJobs && (
         <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
