@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getCompanies } from "@/api/apiCompanies";
 
 import { getJobs } from "@/api/apiJobs";
 import useFetch from "@/hooks/use-fetch";
@@ -7,6 +8,16 @@ import { BarLoader } from "react-spinners";
 import JobCard from "@/components/job-card";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { State } from "country-state-city";
 
 const JobListing = () => {
   // avant le hook useFetch()
@@ -28,6 +39,19 @@ const JobListing = () => {
   const { isLoaded } = useUser();
 
   const {
+    // loading: loadingCompanies,
+    data: companies,
+    fn: fnCompanies,
+  } = useFetch(getCompanies);
+
+  useEffect(() => {
+    if (isLoaded) {
+      fnCompanies();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded]);
+
+  const {
     loading: loadingJobs,
     data: jobs,
     fn: fnJobs,
@@ -46,11 +70,52 @@ const JobListing = () => {
   if (!isLoaded) {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
   }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+
+    const query = formData.get("search-query");
+    if (query) setSearchQuery(query);
+  };
   return (
     <div>
       <h1 className="gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8">
         Dernières annonces
       </h1>
+
+      <form
+        onSubmit={handleSearch}
+        className="h-14 flex flex-row w-full gap-2 items-center mb-3"
+      >
+        <Input
+          type="text"
+          placeholder="Rechercher des emplois par titre.."
+          name="search-query"
+          className="h-full flex-1  px-4 text-md"
+        />
+        <Button type="submit" className="h-full sm:w-28" variant="blue">
+          Recherche
+        </Button>
+      </form>
+      {/* <div className="flex flex-col sm:flex-row gap-2">
+        <Select value={location} onValueChange={(value) => setLocation(value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Filtrer par emplacement" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {State.getStatesOfCountry("IN").map(({ name }) => {
+                return (
+                  <SelectItem key={name} value={name}>
+                    {name}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div> */}
 
       {loadingJobs && (
         <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
