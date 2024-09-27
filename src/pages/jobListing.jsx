@@ -107,20 +107,13 @@ const JobListing = () => {
   // Extraire uniquement les noms des pays africains
   const africanCountryNames = africanCountries.map((country) => country.name);
 
-  console.log(africanCountryNames);
+  // console.log(africanCountryNames);
 
   const {
     // loading: loadingCompanies,
     data: companies,
     fn: fnCompanies,
   } = useFetch(getCompanies);
-
-  useEffect(() => {
-    if (isLoaded) {
-      fnCompanies();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoaded]);
 
   const {
     loading: loadingJobs,
@@ -133,6 +126,12 @@ const JobListing = () => {
   });
 
   // console.log(jobs);
+  useEffect(() => {
+    if (isLoaded) {
+      fnCompanies();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded]);
 
   useEffect(() => {
     if (isLoaded) fnJobs();
@@ -156,6 +155,10 @@ const JobListing = () => {
     setLocation("");
   };
 
+  if (!isLoaded) {
+    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+  }
+
   return (
     <div>
       {/* <h1 className="gradient-title font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center pb-8">
@@ -164,7 +167,7 @@ const JobListing = () => {
 
       <form
         onSubmit={handleSearch}
-        className="h-14 flex flex-row w-full gap-3 sm:gap-2 items-center mb-4 p-4 shadow-lg rounded-lg"
+        className="h-16 flex flex-col sm:flex-row w-full gap-3 sm:gap-2 items-center mb-4 p-4 shadow-lg rounded-lg"
       >
         <Input
           type="text"
@@ -174,7 +177,7 @@ const JobListing = () => {
         />
         <Button
           type="submit"
-          className="h-full  sm:w-28 bg-blue-500 text-white rounded-md px-4 py-2 flex items-center justify-center hover:bg-blue-600 transition duration-200"
+          className="h-full w-full sm:w-28 bg-blue-500 text-white rounded-md px-4 py-2 flex items-center justify-center hover:bg-blue-600 transition duration-200"
           variant="blue"
         >
           <Search className="w-5 h-5" />
@@ -251,13 +254,13 @@ const JobListing = () => {
                 Désolé, nous n&apos;avons trouvé aucune offre correspondant à
                 votre recherche.
               </p>
-              <div className="flex gap-4">
-                <Link to="/">
+              {/* <div className="flex gap-4">
+                <Link to="/jobs">
                   <Button variant="blue" className="rounded-lg">
                     Retour à l&apos;accueil
                   </Button>
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
