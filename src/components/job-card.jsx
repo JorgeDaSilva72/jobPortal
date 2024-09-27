@@ -10,7 +10,7 @@ import {
 } from "./ui/card";
 import { Link } from "react-router-dom";
 import useFetch from "@/hooks/use-fetch";
-// import { deleteJob, saveJob } from "@/api/apiJobs";
+import { saveJob } from "@/api/apiJobs";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
@@ -29,28 +29,28 @@ const JobCard = ({
   //   job_id: job.id,
   // });
 
-  // const {
-  //   loading: loadingSavedJob,
-  //   data: savedJob,
-  //   fn: fnSavedJob,
-  // } = useFetch(saveJob);
+  const {
+    loading: loadingSavedJob,
+    data: savedJob,
+    fn: fnSavedJob,
+  } = useFetch(saveJob, { alreadySaved: saved }); // correction
 
-  // const handleSaveJob = async () => {
-  //   await fnSavedJob({
-  //     user_id: user.id,
-  //     job_id: job.id,
-  //   });
-  //   onJobAction();
-  // };
+  const handleSaveJob = async () => {
+    await fnSavedJob({
+      user_id: user.id,
+      job_id: job.id,
+    });
+    onJobAction();
+  };
 
   // const handleDeleteJob = async () => {
   //   await fnDeleteJob();
   //   onJobAction();
   // };
 
-  // useEffect(() => {
-  //   if (savedJob !== undefined) setSaved(savedJob?.length > 0);
-  // }, [savedJob]);
+  useEffect(() => {
+    if (savedJob !== undefined) setSaved(savedJob?.length > 0);
+  }, [savedJob]);
 
   // Ajout fonction
 
@@ -106,7 +106,7 @@ const JobCard = ({
             En savoir plus
           </Button>
         </Link>
-        {/* {!isMyJob && (
+        {!isMyJob && (
           <Button
             variant="outline"
             className="w-15"
@@ -119,7 +119,7 @@ const JobCard = ({
               <Heart size={20} />
             )}
           </Button>
-        )} */}
+        )}
       </CardFooter>
     </Card>
   );
