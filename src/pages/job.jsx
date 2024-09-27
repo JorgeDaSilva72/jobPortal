@@ -44,21 +44,38 @@ const JobPage = () => {
         <img src={job?.company?.logo_url} className="h-12" alt={job?.title} />
       </div>
 
-      <div className="flex justify-between ">
-        <div className="flex gap-2">
-          <MapPinIcon /> {job?.location}
+      <div className="flex flex-col sm:flex-row justify-between items-center bg-gray-300 p-4 rounded-lg shadow-lg gap-4 sm:gap-8 w-full">
+        {/* Section localisation */}
+        <div className="flex items-center gap-2 text-gray-700">
+          <MapPinIcon className="w-5 h-5 text-blue-500" />
+          <span className="text-sm sm:text-base  text-blue-500">
+            {job?.location}
+          </span>
         </div>
-        <div className="flex gap-2">
-          <Briefcase /> {job?.applications?.length} Candidat(s)
+
+        {/* Section candidats */}
+        <div className="flex items-center gap-2 text-gray-700">
+          <Briefcase className="w-5 h-5 text-green-500" />
+          <span className="text-sm sm:text-base  text-green-500">
+            {job?.applications?.length} Candidat(s)
+          </span>
         </div>
-        <div className="flex gap-2">
+
+        {/* Section disponibilité */}
+        <div className="flex items-center gap-2 text-gray-700">
           {job?.isOpen ? (
             <>
-              <DoorOpen /> Disponible
+              <DoorOpen className="w-5 h-5 text-green-500" />
+              <span className="text-sm sm:text-base text-green-600">
+                Disponible
+              </span>
             </>
           ) : (
             <>
-              <DoorClosed /> Non disponible
+              <DoorClosed className="w-5 h-5 text-red-500" />
+              <span className="text-sm sm:text-base text-red-600">
+                Non disponible
+              </span>
             </>
           )}
         </div>
