@@ -106,7 +106,7 @@ const LandingPage = () => {
           </AccordionItem>
         ))}
       </Accordion>
-      <Contact />
+      {/* <Contact /> */}
     </main>
   );
 };
