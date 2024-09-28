@@ -27,7 +27,7 @@ const schema = z.object({
     .int(),
   skills: z.string().min(1, { message: "Des compétences sont requises" }),
   education: z.enum(
-    ["Bac +8", "Bac +5", "Bac +3e", "Bac +2", "Lycée", "Collége", "Autre"],
+    ["Bac +8", "Bac +5", "Bac +3", "Bac +2", "Lycée", "Collége", "Autre"],
     {
       message: "Le niveau d'étude est requise",
     }
