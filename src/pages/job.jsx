@@ -15,6 +15,7 @@ import {
 import useFetch from "@/hooks/use-fetch";
 import { getSingleJob, updateHiringStatus } from "@/api/apiJobs";
 import MDEditor from "@uiw/react-md-editor";
+import { ApplyJobDrawer } from "@/components/apply-job";
 
 const JobPage = () => {
   const { id } = useParams();
@@ -126,8 +127,17 @@ const JobPage = () => {
       </h2>
       <MDEditor.Markdown
         source={job?.requirements}
-        className="bg-transparent sm:text-lg" // add global ul styles in index.css
+        className="bg-transparent sm:text-lg" //  global ul styles added in index.css
       />
+      {/* Render applications */}
+      {job?.recruiter_id !== user?.id && (
+        <ApplyJobDrawer
+          job={job}
+          user={user}
+          fetchJob={fnJob}
+          applied={job?.applications?.find((ap) => ap.candidate_id === user.id)}
+        />
+      )}
     </div>
   );
 };
