@@ -1,6 +1,6 @@
 import { getCompanies } from "@/api/apiCompanies";
 import { addNewJob } from "@/api/apiJobs";
-// import AddCompanyDrawer from "@/components/add-company-drawer";
+import AddCompanyDrawer from "@/components/add-company-drawer";
 import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
@@ -63,6 +63,7 @@ const PostJob = () => {
     });
   };
 
+  // Après la créetion d'un job, je retourne à la page listing des jobs
   useEffect(() => {
     if (dataCreateJob?.length > 0) navigate("/jobs");
   }, [loadingCreateJob]);
@@ -84,6 +85,7 @@ const PostJob = () => {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
   }
 
+  // je protège la route.Uniquement les recruteurs ont le droit de publier une annonce.
   if (user?.unsafeMetadata?.role !== "recruiter") {
     return <Navigate to="/jobs" />;
   }
@@ -108,13 +110,14 @@ const PostJob = () => {
           <p className="text-red-500">{errors.description.message}</p>
         )}
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center w-full gap-4 sm:flex-row">
+          {/* Sélection de la localisation */}
           <Controller
             name="location"
             control={control}
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full sm:w-auto">
                   <SelectValue placeholder="Pays" />
                 </SelectTrigger>
                 <SelectContent>
@@ -129,12 +132,14 @@ const PostJob = () => {
               </Select>
             )}
           />
+
+          {/* Sélection de l'entreprise */}
           <Controller
             name="company_id"
             control={control}
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full sm:w-auto">
                   <SelectValue placeholder="Entreprise">
                     {field.value
                       ? companies?.find((com) => com.id === Number(field.value))
@@ -154,8 +159,11 @@ const PostJob = () => {
               </Select>
             )}
           />
-          {/* <AddCompanyDrawer fetchCompanies={fnCompanies} /> */}
+
+          {/* Bouton d'ajout d'entreprise */}
+          <AddCompanyDrawer fetchCompanies={fnCompanies} />
         </div>
+
         {errors.location && (
           <p className="text-red-500">{errors.location.message}</p>
         )}
