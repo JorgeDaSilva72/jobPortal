@@ -33,7 +33,7 @@ export async function applyToJob(token, _, jobData) {
   return data;
 }
 
-// - Edit Application Status ( recruiter )
+// - Edit Application Status ( recruiter ) ancienne version BUG tous tles status des candidats sont impactés
 export async function updateApplicationStatus(token, { job_id }, status) {
   const supabase = await supabaseClient(token);
   const { data, error } = await supabase
@@ -49,3 +49,25 @@ export async function updateApplicationStatus(token, { job_id }, status) {
 
   return data;
 }
+
+// - Edit Application Status (recruiter) nouvelle version
+// export async function updateApplicationStatus(
+//   token,
+//   { application_id },
+//   status
+// ) {
+//   console.log("application_id:", application_id);
+//   const supabase = await supabaseClient(token);
+//   const { data, error } = await supabase
+//     .from("applications")
+//     .update({ status })
+//     .eq("id", application_id) // Utilisation de l'ID unique de la candidature
+//     .select();
+
+//   if (error || data.length === 0) {
+//     console.error("Error Updating Application Status:", error);
+//     return null;
+//   }
+
+//   return data;
+// }

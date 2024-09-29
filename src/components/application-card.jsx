@@ -37,6 +37,11 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
     fnHiringStatus(status).then(() => fnHiringStatus());
   };
 
+  // const handleStatusChange = (status) => {
+  //   fnHiringStatus({ status, application_id: application.id }) // Assurez-vous de passer l'ID de la candidature
+  //     .then(() => fnHiringStatus());
+  // };
+
   return (
     <Card>
       {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}

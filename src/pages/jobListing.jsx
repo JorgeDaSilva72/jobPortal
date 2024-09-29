@@ -17,8 +17,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Country } from "country-state-city";
+// import { Country } from "country-state-city";
 import { Search } from "lucide-react";
+import { africanCountires } from "@/data/africanCountries";
 
 const JobListing = () => {
   // avant le hook useFetch()
@@ -40,72 +41,72 @@ const JobListing = () => {
   const { isLoaded } = useUser();
 
   // Liste des codes ISO des pays africains
-  const africanCountryCodes = [
-    "DZ",
-    "AO",
-    "BJ",
-    "BW",
-    "BF",
-    "BI",
-    "CM",
-    "CV",
-    "CF",
-    "TD",
-    "KM",
-    "CD",
-    "DJ",
-    "EG",
-    "GQ",
-    "ER",
-    "SZ",
-    "ET",
-    "GA",
-    "GM",
-    "GH",
-    "GN",
-    "GW",
-    "CI",
-    "KE",
-    "LS",
-    "LR",
-    "LY",
-    "MG",
-    "MW",
-    "ML",
-    "MR",
-    "MU",
-    "MA",
-    "MZ",
-    "NA",
-    "NE",
-    "NG",
-    "RW",
-    "ST",
-    "SN",
-    "SC",
-    "SL",
-    "SO",
-    "ZA",
-    "SS",
-    "SD",
-    "TZ",
-    "TG",
-    "TN",
-    "UG",
-    "EH",
-    "ZM",
-    "ZW",
-  ];
+  // const africanCountryCodes = [
+  //   "DZ",
+  //   "AO",
+  //   "BJ",
+  //   "BW",
+  //   "BF",
+  //   "BI",
+  //   "CM",
+  //   "CV",
+  //   "CF",
+  //   "TD",
+  //   "KM",
+  //   "CD",
+  //   "DJ",
+  //   "EG",
+  //   "GQ",
+  //   "ER",
+  //   "SZ",
+  //   "ET",
+  //   "GA",
+  //   "GM",
+  //   "GH",
+  //   "GN",
+  //   "GW",
+  //   "CI",
+  //   "KE",
+  //   "LS",
+  //   "LR",
+  //   "LY",
+  //   "MG",
+  //   "MW",
+  //   "ML",
+  //   "MR",
+  //   "MU",
+  //   "MA",
+  //   "MZ",
+  //   "NA",
+  //   "NE",
+  //   "NG",
+  //   "RW",
+  //   "ST",
+  //   "SN",
+  //   "SC",
+  //   "SL",
+  //   "SO",
+  //   "ZA",
+  //   "SS",
+  //   "SD",
+  //   "TZ",
+  //   "TG",
+  //   "TN",
+  //   "UG",
+  //   "EH",
+  //   "ZM",
+  //   "ZW",
+  // ];
 
   // Récupérer tous les pays
-  const allCountries = Country.getAllCountries();
+  // const allCountries = Country.getAllCountries();
 
   // Filtrer uniquement les pays africains
-  const africanCountries = allCountries.filter((country) =>
-    africanCountryCodes.includes(country.isoCode)
-  );
+  // const africanCountries = allCountries.filter((country) =>
+  //   africanCountryCodes.includes(country.isoCode)
+  // );
   // Extraire uniquement les noms des pays africains
-  const africanCountryNames = africanCountries.map((country) => country.name);
+  // const africanCountryNames = africanCountries.map((country) => country.name);
 
   // console.log(africanCountryNames);
 
@@ -161,43 +162,48 @@ const JobListing = () => {
 
   return (
     <div>
-      {/* <h1 className="gradient-title font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center pb-8">
+      {/* <h1 className="pb-8 text-4xl font-extrabold text-center gradient-title sm:text-5xl md:text-6xl lg:text-7xl">
         Dernières annonces
       </h1> */}
 
       <form
         onSubmit={handleSearch}
-        className="h-16 flex flex-col sm:flex-row w-full gap-3 sm:gap-2 items-center mb-4 p-4 shadow-lg rounded-lg"
+        className="flex flex-col items-center w-full h-16 gap-3 p-4 mb-4 rounded-lg shadow-lg sm:flex-row sm:gap-2"
       >
         <Input
           type="text"
           placeholder="Rechercher des emplois par titre..."
           name="search-query"
-          className="h-full flex-1 px-4 py-2 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
+          className="flex-1 h-full px-4 py-2 transition duration-200 border border-gray-300 rounded-md text-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <Button
           type="submit"
-          className="h-full w-full sm:w-28 bg-blue-500 text-white rounded-md px-4 py-2 flex items-center justify-center hover:bg-blue-600 transition duration-200"
+          className="flex items-center justify-center w-full h-full px-4 py-2 text-white transition duration-200 bg-blue-500 rounded-md sm:w-28 hover:bg-blue-600"
           variant="blue"
         >
           <Search className="w-5 h-5" />
         </Button>
       </form>
 
-      <div className="flex flex-col sm:flex-row gap-2 mt-8 sm:mt-4">
+      <div className="flex flex-col gap-2 mt-8 sm:flex-row sm:mt-4">
         <Select value={location} onValueChange={(value) => setLocation(value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filtrer par pays" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {africanCountryNames.map((countryName) => {
+              {africanCountires.map((country) => (
+                <SelectItem key={country} value={country}>
+                  {country}
+                </SelectItem>
+              ))}
+              {/* {africanCountryNames.map((countryName) => {
                 return (
                   <SelectItem key={countryName} value={countryName}>
                     {countryName}
                   </SelectItem>
                 );
-              })}
+              })} */}
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -234,7 +240,7 @@ const JobListing = () => {
       )}
 
       {loadingJobs === false && (
-        <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {jobs?.length ? (
             jobs.map((job) => {
               return (
@@ -247,10 +253,10 @@ const JobListing = () => {
             })
           ) : (
             <div className="flex flex-col items-center justify-center h-64 text-center">
-              <h2 className="text-2xl font-bold text-gray-700 mb-4">
+              <h2 className="mb-4 text-2xl font-bold text-gray-700">
                 Aucune offre d&apos;emploi trouvée 😢
               </h2>
-              <p className="text-gray-500 mb-6">
+              <p className="mb-6 text-gray-500">
                 Désolé, nous n&apos;avons trouvé aucune offre correspondant à
                 votre recherche.
               </p>
