@@ -6,7 +6,6 @@ import useFetch from "@/hooks/use-fetch";
 import { useUser } from "@clerk/clerk-react";
 import { BarLoader } from "react-spinners";
 import JobCard from "@/components/job-card";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,8 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // import { Country } from "country-state-city";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { africanCountires } from "@/data/africanCountries";
+import NojobsFound from "@/components/NojobsFound";
 
 const JobListing = () => {
   // avant le hook useFetch()
@@ -38,6 +38,7 @@ const JobListing = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState("");
   const [company_id, setCompany_id] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const { isLoaded } = useUser();
 
   // Liste des codes ISO des pays africains
@@ -154,6 +155,11 @@ const JobListing = () => {
     setSearchQuery("");
     setCompany_id("");
     setLocation("");
+    setInputValue("");
+  };
+
+  const handleClear = () => {
+    setInputValue("");
   };
 
   if (!isLoaded) {
@@ -170,12 +176,25 @@ const JobListing = () => {
         onSubmit={handleSearch}
         className="flex flex-col items-center w-full h-16 gap-3 p-4 mb-4 rounded-lg shadow-lg sm:flex-row sm:gap-2"
       >
-        <Input
-          type="text"
-          placeholder="Rechercher des emplois par titre..."
-          name="search-query"
-          className="flex-1 h-full px-4 py-2 transition duration-200 border border-gray-300 rounded-md text-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        <div className="relative flex-1 w-full">
+          <Input
+            type="text"
+            placeholder="Rechercher des emplois par titre..."
+            name="search-query"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="flex-1 h-full px-4 py-2 transition duration-200 border border-gray-300 rounded-md text-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          {inputValue && (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="absolute text-white transform -translate-y-1/2 right-2 top-1/2 hover:text-gray-600"
+            >
+              <X size={18} />
+            </button>
+          )}
+        </div>
         <Button
           type="submit"
           className="flex items-center justify-center w-full h-full px-4 py-2 text-white transition duration-200 bg-blue-500 rounded-md sm:w-28 hover:bg-blue-600"
@@ -252,22 +271,33 @@ const JobListing = () => {
               );
             })
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 text-center">
-              <h2 className="mb-4 text-2xl font-bold text-gray-700">
-                Aucune offre d&apos;emploi trouvée 😢
-              </h2>
-              <p className="mb-6 text-gray-500">
-                Désolé, nous n&apos;avons trouvé aucune offre correspondant à
-                votre recherche.
-              </p>
-              {/* <div className="flex gap-4">
-                <Link to="/jobs">
-                  <Button variant="blue" className="rounded-lg">
-                    Retour à l&apos;accueil
-                  </Button>
-                </Link>
-              </div> */}
-            </div>
+            <NojobsFound />
+            // <div className="flex flex-col items-center justify-center p-5 text-gray-600 bg-gray-100 border border-gray-300 rounded-lg min-h-[300px]">
+            //   <p className="text-lg font-semibold">
+            //     Aucune offre d&apos;emploi trouvée 😢
+            //   </p>
+            //   <p className="mt-1 text-sm text-gray-500">
+            //     Désolé, nous n&apos;avons trouvé aucune offre correspondant à
+            //     votre recherche.
+            //   </p>
+            // </div>
+
+            // <div className="flex flex-col items-center justify-center h-64 text-center">
+            //   <h2 className="mb-4 text-2xl font-bold text-gray-700">
+            //     Aucune offre d&apos;emploi trouvée 😢
+            //   </h2>
+            //   <p className="mb-6 text-gray-500">
+            //     Désolé, nous n&apos;avons trouvé aucune offre correspondant à
+            //     votre recherche.
+            //   </p>
+            //   {/* <div className="flex gap-4">
+            //     <Link to="/jobs">
+            //       <Button variant="blue" className="rounded-lg">
+            //         Retour à l&apos;accueil
+            //       </Button>
+            //     </Link>
+            //   </div> */}
+            // </div>
           )}
         </div>
       )}

@@ -63,7 +63,7 @@ const SavedJobs = () => {
               );
             })
           ) : (
-            <div className="flex flex-col items-center justify-center p-5 text-gray-600 bg-gray-100 border border-gray-300 rounded-lg">
+            <div className="flex flex-col items-center justify-center p-5 text-gray-600 bg-gray-100 border border-gray-300 rounded-lg min-h-[300px]">
               <img
                 src="https://img.icons8.com/emoji/48/000000/eyes-emoji.png"
                 alt="Emoji Yeux"
