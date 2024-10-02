@@ -10,7 +10,7 @@ import {
 } from "./ui/card";
 import { Link } from "react-router-dom";
 import useFetch from "@/hooks/use-fetch";
-import { saveJob } from "@/api/apiJobs";
+import { deleteJob, saveJob } from "@/api/apiJobs";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
@@ -25,9 +25,9 @@ const JobCard = ({
 
   const { user } = useUser();
 
-  // const { loading: loadingDeleteJob, fn: fnDeleteJob } = useFetch(deleteJob, {
-  //   job_id: job.id,
-  // });
+  const { loading: loadingDeleteJob, fn: fnDeleteJob } = useFetch(deleteJob, {
+    job_id: job.id,
+  });
 
   const {
     loading: loadingSavedJob,
@@ -43,17 +43,16 @@ const JobCard = ({
     onJobAction();
   };
 
-  // const handleDeleteJob = async () => {
-  //   await fnDeleteJob();
-  //   onJobAction();
-  // };
+  const handleDeleteJob = async () => {
+    await fnDeleteJob();
+    onJobAction();
+  };
 
   useEffect(() => {
     if (savedJob !== undefined) setSaved(savedJob?.length > 0);
   }, [savedJob]);
 
   // Ajout fonction
-
   const getShortDescription = (description) => {
     // Trouve l'index du premier point
     const firstPeriodIndex = description.indexOf(".");
@@ -73,31 +72,31 @@ const JobCard = ({
 
   return (
     <Card className="flex flex-col">
-      {/* {loadingDeleteJob && (
+      {loadingDeleteJob && (
         <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
-      )} */}
+      )}
       <CardHeader className="flex">
         <CardTitle className="flex justify-between font-bold">
           {job.title}
-          {/* {isMyJob && (
+          {isMyJob && (
             <Trash2Icon
               fill="red"
               size={18}
               className="text-red-300 cursor-pointer"
               onClick={handleDeleteJob}
             />
-          )} */}
+          )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4 flex-1">
+      <CardContent className="flex flex-col flex-1 gap-4">
         <div className="flex justify-between">
           {job.company && <img src={job.company.logo_url} className="h-6" />}
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <MapPinIcon size={15} /> {job.location}
           </div>
         </div>
         <hr />
-        {/* {job.description.substring(0, job.description.indexOf("."))}. */}
+        {job.description.substring(0, job.description.indexOf("."))}.
         {getShortDescription(job.description)}
       </CardContent>
       <CardFooter className="flex gap-2">

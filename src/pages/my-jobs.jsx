@@ -1,5 +1,5 @@
 import CreatedApplications from "@/components/created-applications";
-// import CreatedJobs from "@/components/created-jobs";
+import CreatedJobs from "@/components/created-jobs";
 import { useUser } from "@clerk/clerk-react";
 import { BarLoader } from "react-spinners";
 
@@ -17,13 +17,12 @@ const MyJobs = () => {
       <h1 className="pb-4 text-4xl font-extrabold text-center gradient-title sm:text-6xl ">
         {user?.unsafeMetadata?.role === "candidate"
           ? "Mes candidatures"
-          : "Mes annonces créées"}
+          : "Mes emplois créés"}
       </h1>
       {user?.unsafeMetadata?.role === "candidate" ? (
         <CreatedApplications />
       ) : (
-        <h1 className="">CreatedJobs</h1>
-        // <CreatedJobs />
+        <CreatedJobs />
       )}
     </div>
   );
