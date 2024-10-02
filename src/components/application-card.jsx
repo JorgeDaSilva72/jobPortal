@@ -48,7 +48,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
       <CardHeader>
         <CardTitle className="flex justify-between font-bold">
           {isCandidate
-            ? `${application?.job?.title} at ${application?.job?.company?.name}`
+            ? `${application?.job?.title} pour ${application?.job?.company?.name}`
             : application?.name}
           <Download
             size={18}
@@ -77,7 +77,16 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
         <span>{new Date(application?.created_at).toLocaleString()}</span>
         {isCandidate ? (
           <span className="font-bold capitalize">
-            Status: {application.status}
+            Statut:{" "}
+            {application.status === "applied"
+              ? "Postulé"
+              : application.status === "interviewing"
+              ? "Entretien"
+              : application.status === "hired"
+              ? "Embauché"
+              : application.status === "rejected"
+              ? "Refusé"
+              : ""}
           </span>
         ) : (
           <Select
