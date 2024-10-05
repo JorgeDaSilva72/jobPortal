@@ -20,6 +20,7 @@ import {
 import { Search, X } from "lucide-react";
 import { africanCountires } from "@/data/africanCountries";
 import NojobsFound from "@/components/NojobsFound";
+import Pagination from "@/components/pagination";
 
 const JobListing = () => {
   // avant le hook useFetch()
@@ -40,6 +41,10 @@ const JobListing = () => {
   const [company_id, setCompany_id] = useState("");
   const [inputValue, setInputValue] = useState("");
   const { isLoaded } = useUser();
+
+  // Ajout pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 2; // Nombre d'emplois par page
 
   // Liste des codes ISO des pays africains
   // const africanCountryCodes = [
@@ -125,6 +130,8 @@ const JobListing = () => {
     location,
     company_id,
     searchQuery,
+    page: currentPage,
+    jobsPerPage: jobsPerPage,
   });
 
   // console.log(jobs);
@@ -138,7 +145,7 @@ const JobListing = () => {
   useEffect(() => {
     if (isLoaded) fnJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoaded, location, company_id, searchQuery]);
+  }, [isLoaded, location, company_id, searchQuery, currentPage, jobsPerPage]);
   if (!isLoaded) {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
   }
@@ -259,47 +266,60 @@ const JobListing = () => {
       )}
 
       {loadingJobs === false && (
-        <div className="grid gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
-          {jobs?.length ? (
-            jobs.map((job) => {
-              return (
-                <JobCard
-                  key={job.id}
-                  job={job}
-                  savedInit={job?.saved?.length > 0}
-                />
-              );
-            })
-          ) : (
-            <NojobsFound />
-            // <div className="flex flex-col items-center justify-center p-5 text-gray-600 bg-gray-100 border border-gray-300 rounded-lg min-h-[300px]">
-            //   <p className="text-lg font-semibold">
-            //     Aucune offre d&apos;emploi trouvée 😢
-            //   </p>
-            //   <p className="mt-1 text-sm text-gray-500">
-            //     Désolé, nous n&apos;avons trouvé aucune offre correspondant à
-            //     votre recherche.
-            //   </p>
-            // </div>
+        <>
+          <div className="grid gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
+            {jobs?.data?.length ? (
+              jobs?.data?.map((job) => {
+                return (
+                  <JobCard
+                    key={job.id}
+                    job={job}
+                    savedInit={job?.saved?.length > 0}
+                  />
+                );
+              })
+            ) : (
+              <NojobsFound />
+              // <div className="flex flex-col items-center justify-center p-5 text-gray-600 bg-gray-100 border border-gray-300 rounded-lg min-h-[300px]">
+              //   <p className="text-lg font-semibold">
+              //     Aucune offre d&apos;emploi trouvée 😢
+              //   </p>
+              //   <p className="mt-1 text-sm text-gray-500">
+              //     Désolé, nous n&apos;avons trouvé aucune offre correspondant à
+              //     votre recherche.
+              //   </p>
+              // </div>
 
-            // <div className="flex flex-col items-center justify-center h-64 text-center">
-            //   <h2 className="mb-4 text-2xl font-bold text-gray-700">
-            //     Aucune offre d&apos;emploi trouvée 😢
-            //   </h2>
-            //   <p className="mb-6 text-gray-500">
-            //     Désolé, nous n&apos;avons trouvé aucune offre correspondant à
-            //     votre recherche.
-            //   </p>
-            //   {/* <div className="flex gap-4">
-            //     <Link to="/jobs">
-            //       <Button variant="blue" className="rounded-lg">
-            //         Retour à l&apos;accueil
-            //       </Button>
-            //     </Link>
-            //   </div> */}
-            // </div>
+              // <div className="flex flex-col items-center justify-center h-64 text-center">
+              //   <h2 className="mb-4 text-2xl font-bold text-gray-700">
+              //     Aucune offre d&apos;emploi trouvée 😢
+              //   </h2>
+              //   <p className="mb-6 text-gray-500">
+              //     Désolé, nous n&apos;avons trouvé aucune offre correspondant à
+              //     votre recherche.
+              //   </p>
+              //   {/* <div className="flex gap-4">
+              //     <Link to="/jobs">
+              //       <Button variant="blue" className="rounded-lg">
+              //         Retour à l&apos;accueil
+              //       </Button>
+              //     </Link>
+              //   </div> */}
+              // </div>
+            )}
+          </div>
+          {/* Pagination */}
+          {jobs.totalJobs > 0 && (
+            <div className="flex justify-center mt-8">
+              <Pagination
+                totalItems={jobs.totalJobs}
+                itemsPerPage={jobsPerPage}
+                currentPage={currentPage}
+                onPageChange={(page) => setCurrentPage(page)} // Met à jour la page
+              />
+            </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );

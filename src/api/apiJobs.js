@@ -1,13 +1,35 @@
 import supabaseClient from "@/utils/supabase";
 import useFetch from "@/hooks/use-fetch";
 
-// Fetch Jobs
-export async function getJobs(token, { location, company_id, searchQuery }) {
+// Fetch Jobs with Pagination
+
+// Ajout de la fonctionnalité pagination
+// Pagination Logic :
+// range((page - 1) * perPage, page * perPage - 1) : Cette ligne détermine l'intervalle des résultats à retourner.
+// Par exemple, si tu es sur la page 1 avec perPage = 10, cela va chercher les éléments de l'index 0 à 9 (les 10 premiers résultats).
+// Pour la page 2, il retournera les résultats de l'index 10 à 19, et ainsi de suite.
+// En utilisant page et perPage, tu peux maintenant contrôler combien de résultats sont renvoyés par page.
+
+export async function getJobs(
+  token,
+  { location, company_id, searchQuery, page = 1, jobsPerPage = 2 }
+) {
   const supabase = await supabaseClient(token);
+
+  // Calcul de l'offset et de la plage pour la pagination
+  const from = (page - 1) * jobsPerPage;
+  const to = page * jobsPerPage - 1;
+
   let query = supabase
     .from("jobs")
-    .select("*, saved: saved_jobs(id), company: companies(name,logo_url)");
+    // .select("*, saved: saved_jobs(id), company: companies(name,logo_url)")
+    .select("*, saved: saved_jobs(id), company: companies(name,logo_url)", {
+      count: "exact", // Include total count
+    })
+    .range(from, to); // Pagination logic
 
+  // Application des filtres si présents
+  // Apply filters if provided
   if (location) {
     query = query.eq("location", location);
   }
@@ -20,14 +42,20 @@ export async function getJobs(token, { location, company_id, searchQuery }) {
     query = query.ilike("title", `%${searchQuery}%`);
   }
 
-  const { data, error } = await query;
+  // Execute the query
+  // const { data, error } = await query;
+  const { data, error, count } = await query; // 'count' contains the total number of jobs
+  console.log("data:", data);
+  console.log("count:", count);
 
   if (error) {
     console.error("Error fetching Jobs:", error);
-    return null;
+    // return null;
+    return { data: [], totalJobs: 0 }; // Retourne un tableau vide en cas d'erreur
   }
 
-  return data;
+  /// Return paginated jobs along with total count
+  return { data, totalJobs: count };
 }
 
 // Read Saved Jobs
