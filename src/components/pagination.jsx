@@ -1,3 +1,5 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 const Pagination = ({
   totalItems,
   itemsPerPage,
@@ -32,7 +34,7 @@ const Pagination = ({
             }`}
             disabled={currentPage === 1}
           >
-            Précédent
+            <ChevronLeft className="w-5 h-5" /> {/* Icône ChevronLeft */}
           </button>
         </li>
 
@@ -61,7 +63,7 @@ const Pagination = ({
             }`}
             disabled={currentPage === totalPages}
           >
-            Suivant
+            <ChevronRight className="w-5 h-5" /> {/* Icône ChevronRight */}
           </button>
         </li>
       </ul>

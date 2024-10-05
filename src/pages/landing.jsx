@@ -17,24 +17,26 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Pricing from "@/components/pricing";
+
 const LandingPage = () => {
   return (
-    <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
+    <main className="flex flex-col gap-10 py-10 sm:gap-20 sm:py-20">
       <section className="text-center ">
-        <h1 className="flex flex-col items-center justify-center gradient-title font-extrabold text-4xl sm:text-6xl lg:text-8xl tracking-tighter py-4">
+        <h1 className="flex flex-col items-center justify-center py-4 text-4xl font-extrabold tracking-tighter gradient-title sm:text-6xl lg:text-8xl">
           Trouvez l&apos;emploi de vos rêves.
         </h1>
-        <p className="text-gray-300 sm:mt-4 text-xs sm:text-xl">
+        <p className="text-xs text-gray-300 sm:mt-4 sm:text-xl">
           Afrique Avenir : Révélez votre potentiel, bâtissez l&apos;Afrique de
           demain avec les meilleures opportunités d&apos;emploi.
         </p>
       </section>
-      <div className="flex flex-col gap-6 justify-center sm:flex-row">
+      <div className="flex flex-col justify-center gap-6 sm:flex-row">
         <Link to={"/jobs"}>
           <Button
             variant="blue"
             size="xl"
-            className="w-full sm:w-auto py-3 px-6 text-sm sm:text-lg"
+            className="w-full px-6 py-3 text-sm sm:w-auto sm:text-lg"
           >
             Trouver un emploi
           </Button>
@@ -43,7 +45,7 @@ const LandingPage = () => {
           <Button
             variant="destructive"
             size="xl"
-            className="w-full sm:w-auto py-3 px-6 text-sm sm:text-lg"
+            className="w-full px-6 py-3 text-sm sm:w-auto sm:text-lg"
           >
             Publier un emploi
           </Button>
@@ -57,13 +59,13 @@ const LandingPage = () => {
         ]}
         className="w-full py-10"
       >
-        <CarouselContent className="flex gap-5 sm:gap-20 items-center">
+        <CarouselContent className="flex items-center gap-5 sm:gap-20">
           {companies.map(({ name, id, path }) => (
             <CarouselItem key={id} className="basis-1/3 lg:basis-1/6 ">
               <img
                 src={path}
                 alt={name}
-                className="h-9 sm:h-14 object-contain"
+                className="object-contain h-9 sm:h-14"
               />
             </CarouselItem>
           ))}
@@ -75,7 +77,7 @@ const LandingPage = () => {
         className="w-full h-auto max-h-[600px] object-contain"
       />
 
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="font-bold">
@@ -97,6 +99,7 @@ const LandingPage = () => {
           </CardContent>
         </Card>
       </section>
+      <Pricing />
       <Accordion type="multiple" className="w-full">
         {faqs.map((faq, index) => (
           <AccordionItem key={index} value={`item-${index + 1}`}>
