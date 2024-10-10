@@ -8,7 +8,7 @@ import {
   useUser,
 } from "@clerk/clerk-react";
 import { Button } from "./ui/button";
-import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
+import { BriefcaseBusiness, Heart, PenBox, UserIcon } from "lucide-react";
 
 const Header = () => {
   const [showSignIn, setShowSignIn] = useState(false);
@@ -31,11 +31,11 @@ const Header = () => {
 
   return (
     <>
-      <nav className="py-4 flex justify-between items-center">
+      <nav className="flex items-center justify-between py-4">
         <Link to="/">
           <img
             src="/logo.jpeg"
-            className="h-10 sm:h-14 md:h-18 lg:h-22 rounded-ful rounded-full"
+            className="h-10 rounded-full sm:h-14 md:h-18 lg:h-22 rounded-ful"
             alt="Logo"
           />
         </Link>
@@ -55,7 +55,7 @@ const Header = () => {
                 </Button> */}
                 <Button
                   variant="destructive"
-                  className="rounded-full flex items-center"
+                  className="flex items-center rounded-full"
                 >
                   <PenBox size={20} className="mr-2" />
                   <span className="hidden sm:inline">
@@ -82,6 +82,11 @@ const Header = () => {
                   label="Annonces sauvegardés"
                   labelIcon={<Heart size={15} />}
                   href="/saved-jobs"
+                />
+                <UserButton.Link
+                  label="Mon profil"
+                  labelIcon={<UserIcon size={15} />}
+                  href="/userProfilePage"
                 />
                 <UserButton.Action label="manageAccount" />
               </UserButton.MenuItems>
