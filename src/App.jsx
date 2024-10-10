@@ -15,6 +15,7 @@ import JobPage from "./pages/job";
 
 import "./App.css";
 import NotFoundPage from "./pages/NotFoundPage";
+import PricingPage from "./pages/pricingPage";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <JobPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/pricingPage",
+        element: (
+          <ProtectedRoute>
+            <PricingPage />
           </ProtectedRoute>
         ),
       },

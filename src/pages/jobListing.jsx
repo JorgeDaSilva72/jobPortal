@@ -309,7 +309,7 @@ const JobListing = () => {
             )}
           </div>
           {/* Pagination */}
-          {jobs.totalJobs > 0 && (
+          {jobs?.totalJobs > 0 && (
             <div className="flex justify-center mt-8">
               <Pagination
                 totalItems={jobs.totalJobs}
