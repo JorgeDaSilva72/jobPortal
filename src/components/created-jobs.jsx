@@ -4,6 +4,7 @@ import { useUser } from "@clerk/clerk-react";
 import { BarLoader } from "react-spinners";
 import JobCard from "./job-card";
 import { useEffect } from "react";
+import NoJobsCreated from "./NoJobsCreated";
 
 const CreatedJobs = () => {
   const { user } = useUser();
@@ -39,7 +40,8 @@ const CreatedJobs = () => {
               );
             })
           ) : (
-            <div>No Jobs Found 😢</div>
+            <NoJobsCreated />
+            // <div>No Jobs Found 😢</div>
           )}
         </div>
       )}

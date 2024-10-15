@@ -3,6 +3,7 @@ import useFetch from "@/hooks/use-fetch";
 import { useUser } from "@clerk/clerk-react";
 import { UserIcon } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 
 const UserProfilePage = () => {
@@ -19,19 +20,9 @@ const UserProfilePage = () => {
     user_id: user?.id,
   });
 
-  if (errorSingleSubscription) {
-    return (
-      <div className="text-center text-red-500">
-        Une erreur s&apos;est produite lors de la récupération des données de
-        l&apos;abonnement.
-      </div>
-    );
-  }
-
   useEffect(() => {
     if (isLoaded && user) {
-      console.log("user", user);
-      fnSingleSubscription();
+      fnSingleSubscription(); // Récupère l'abonnement une fois que l'utilisateur est chargé
     }
   }, [user, isLoaded]);
 
@@ -94,18 +85,46 @@ const UserProfilePage = () => {
 
           {user?.unsafeMetadata?.role === "recruiter" && (
             <>
-              <p className="text-sm text-gray-600 sm:text-base">
-                <span className="font-bold">Abonnement :</span>{" "}
-                {SingleSubscription?.plan_id === 2
-                  ? "Vous avez un abonnement pro"
-                  : "Vous n'avez pas d'abonnement"}
-              </p>
-              <p className="text-sm text-gray-600 sm:text-base">
-                <span className="font-bold">Expire le :</span>{" "}
-                {SingleSubscription?.end_date
-                  ? new Date(SingleSubscription?.end_date).toLocaleDateString()
-                  : "Non disponible"}
-              </p>
+              {errorSingleSubscription ? (
+                <p className="text-sm text-red-500">
+                  Une erreur s&apos;est produite lors de la récupération des
+                  données de l&apos;abonnement:{" "}
+                  {errorSingleSubscription.message}.
+                </p>
+              ) : (
+                <>
+                  {/* <p className="text-sm text-gray-600 sm:text-base">
+                    <span className="font-bold">Abonnement :</span>{" "}
+                    {SingleSubscription?.plan_id === 2
+                      ? "Vous avez un abonnement pro"
+                      : "Vous n'avez pas d'abonnement"}
+                  </p> */}
+                  <p className="text-sm text-gray-600 sm:text-base">
+                    <span className="font-bold">Abonnement :</span>{" "}
+                    {SingleSubscription?.plan_id === 2 ? (
+                      "Vous avez un abonnement pro"
+                    ) : (
+                      <>
+                        Vous n&apos;avez pas d&apos;abonnement.
+                        <Link
+                          to="/pricingPage"
+                          className="inline-block px-4 py-2 ml-4 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                        >
+                          Voir les abonnements
+                        </Link>
+                      </>
+                    )}
+                  </p>
+                  <p className="text-sm text-gray-600 sm:text-base">
+                    <span className="font-bold">Expire le :</span>{" "}
+                    {SingleSubscription?.end_date
+                      ? new Date(
+                          SingleSubscription?.end_date
+                        ).toLocaleDateString()
+                      : "Non disponible"}
+                  </p>
+                </>
+              )}
             </>
           )}
         </div>

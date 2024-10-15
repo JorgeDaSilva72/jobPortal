@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 // import { Country } from "country-state-city";
 import { Search, X } from "lucide-react";
-import { africanCountires } from "@/data/africanCountries";
+import { africanCountries } from "@/data/africanCountries";
 import NojobsFound from "@/components/NojobsFound";
 import Pagination from "@/components/pagination";
 
@@ -218,7 +218,7 @@ const JobListing = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {africanCountires.map((country) => (
+              {africanCountries.map((country) => (
                 <SelectItem key={country} value={country}>
                   {country}
                 </SelectItem>

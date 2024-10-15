@@ -17,6 +17,7 @@ import "./App.css";
 import NotFoundPage from "./pages/NotFoundPage";
 import PricingPage from "./pages/pricingPage";
 import UserProfilePage from "./pages/userProfilePage";
+import TestPayPal from "./pages/TestPayPal";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <PricingPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/testPayPalPage", // A EFFACER
+        element: (
+          <ProtectedRoute>
+            <TestPayPal />
           </ProtectedRoute>
         ),
       },
