@@ -42,8 +42,8 @@ export async function getSingleSubscription(token, { user_id }) {
       .select("*") // Sélectionne toutes les colonnes de la table.
       .eq("user_id", user_id) //Filtre les résultats pour ne récupérer que les enregistrements où la colonne user_id correspond à la valeur fournie.
 
-      .single(); //Indique que l'on s'attend à un seul enregistrement. Si plusieurs enregistrements correspondent, une erreur sera générée.
-
+      // .single(); //Indique que l'on s'attend à un seul enregistrement. Si plusieurs enregistrements correspondent, une erreur sera générée.
+      .maybeSingle(); // Renvoie null s'il n'y a pas de données
     const { data, error } = await query; // La requête est exécutée et les résultats sont destructurés en data et error.
 
     // Gestion des erreurs de la requête
@@ -58,7 +58,7 @@ export async function getSingleSubscription(token, { user_id }) {
       // return null;
     }
     // Retour des données si tout est OK
-    return data; // Retour des Données
+    return data; // Retour des Données. data sera null si aucune ligne n'a été trouvée
   } catch (err) {
     // Gestion des erreurs inattendues
     console.error("Unexpected error in getSingleSubscription:", err);
