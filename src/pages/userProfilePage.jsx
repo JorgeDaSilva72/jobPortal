@@ -31,6 +31,10 @@ const UserProfilePage = () => {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
   }
 
+  const isExpired = SingleSubscription?.end_date
+    ? new Date(SingleSubscription.end_date) < new Date()
+    : false;
+
   return (
     <div className="max-w-lg px-4 py-8 mx-auto rounded-lg shadow-lg sm:px-6 sm:py-12 md:max-w-2xl lg:max-w-4xl bg-gray-50">
       <h1 className="pb-4 text-2xl font-bold text-center text-gray-800 sm:text-4xl md:text-5xl">
@@ -82,19 +86,31 @@ const UserProfilePage = () => {
               ) : SingleSubscription ? (
                 <>
                   <p className="text-sm text-gray-600 sm:text-base">
-                    <span className="font-bold">Abonnement :</span>
+                    <span className="font-bold">Abonnement : </span>
                     {SingleSubscription.plan_id === 2
                       ? "Vous avez un abonnement pro"
                       : "Vous n'avez pas d'abonnement"}
                   </p>
                   <p className="text-sm text-gray-600 sm:text-base">
-                    <span className="font-bold">Expire le :</span>
+                    <span className="font-bold">Expire le : </span>
                     {SingleSubscription.end_date
                       ? new Date(
                           SingleSubscription.end_date
                         ).toLocaleDateString()
                       : "Non disponible"}
                   </p>
+
+                  {isExpired && (
+                    <p className="text-sm text-red-500">
+                      Votre abonnement a expiré.{" "}
+                      <Link
+                        to="/pricingPage"
+                        className="inline-block px-4 py-2 ml-4 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                      >
+                        Renouveler l&apos;abonnement
+                      </Link>
+                    </p>
+                  )}
                 </>
               ) : (
                 <p className="text-sm text-gray-600 sm:text-base">
