@@ -10,8 +10,8 @@ export async function addNewSubscription(token, _, subscriptionData) {
     .select();
 
   if (error) {
-    console.error(error);
-    throw new Error("Error Creating subscription");
+    console.error("Supabase error:", error);
+    throw new Error(error.message || "Error creating subscription");
   }
 
   return data;
