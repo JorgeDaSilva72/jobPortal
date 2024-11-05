@@ -65,3 +65,28 @@ export async function getSingleSubscription(token, { user_id }) {
     throw err; // Vous pouvez choisir de gérer l'erreur différemment
   }
 }
+
+export async function updateSubscription(
+  token,
+  { user_subscriptions_id },
+  updates
+) {
+  if (!user_subscriptions_id || !updates) {
+    console.error("Missing user_subscriptions_id or updates");
+    return null;
+  }
+
+  const supabase = await supabaseClient(token);
+  const { data, error } = await supabase
+    .from("user_subscriptions")
+    .update(updates) // "updates" contient toutes les colonnes à modifier
+    .eq("id", user_subscriptions_id)
+    .select();
+
+  if (error) {
+    console.error("Error updating user subscription:", error.message);
+    return null;
+  }
+
+  return data;
+}

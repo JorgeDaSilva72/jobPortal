@@ -26,7 +26,7 @@ const useFetch = (cb, options = {}) => {
       setError(null);
     } catch (error) {
       console.error("Error fetching data:", error); // Log pour voir les erreurs
-      setError(error);
+      setError({ message: error.message || "Erreur inconnue" });
       throw error; // Permet de gérer l'erreur dans handleSubmit
     } finally {
       setLoading(false);
