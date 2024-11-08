@@ -27,8 +27,9 @@ const LandingPage = () => {
           Trouvez l&apos;emploi de vos rêves.
         </h1>
         <p className="text-xs text-gray-300 sm:mt-4 sm:text-xl">
-          Afrique Avenir : Révélez votre potentiel, bâtissez l&apos;Afrique de
-          demain avec les meilleures opportunités d&apos;emploi.
+          Afrique Avenir Emploi : Révélez votre potentiel, bâtissez
+          l&apos;Afrique de demain avec les meilleures opportunités
+          d&apos;emploi.
         </p>
       </section>
       <div className="flex flex-col justify-center gap-6 sm:flex-row">

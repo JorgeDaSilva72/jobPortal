@@ -42,7 +42,7 @@ const Header = () => {
             alt="Logo"
           />
           {/* Texte caché sur petit écran */}
-          <div className="flex flex-row ml-2 text-center md:items-center md:text-left">
+          <div className="hidden ml-2 text-center sm:flex sm:flex-row sm:items-center sm:text-left">
             <p className="text-xs font-bold text-primary sm:text-sm md:text-md lg:text-lg">
               AFRIQUE&nbsp;
             </p>
