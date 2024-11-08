@@ -23,6 +23,12 @@ import {
 import PlanCard from "@/components/PlanCard";
 // import { PayPalButtons } from "@paypal/react-paypal-js";
 
+const planIdMap = {
+  Pro: 2, // ID du plan "Pro"
+  Starter: 1, // ID du plan "Starter"
+  // Ajoute d'autres plans si nécessaire
+};
+
 const PricingPage = () => {
   const [selectedPlan, setSelectedPlan] = useState("Pro"); // Par défaut, le plan "Pro" est sélectionné
   const { user, isLoaded } = useUser();
@@ -43,7 +49,6 @@ const PricingPage = () => {
   });
 
   //De cette façon, fnSingleSubscription ne sera appelé que lorsque l'utilisateur est chargé
-
   useEffect(() => {
     if (isLoaded && user) {
       fnSingleSubscription();
@@ -70,20 +75,6 @@ const PricingPage = () => {
     user_subscriptions_id: SingleSubscription?.id || null, // Initially pass null or undefined
   });
 
-  // useEffect(() => {
-  //   if (dataCreateSubscription?.success) {
-  //     setShowLimitAlert(true); // Afficher la modale de succès
-  //     fnSingleSubscription(); // Recharger les données de l'abonnement
-  //   }
-  // }, [dataCreateSubscription]); // Déclencher la modale dès que la donnée est mise à jour
-
-  // useEffect(() => {
-  //   if (dataCreateSubscription?.success && !loadingCreateSubscription) {
-  //     setShowSuccessAlert(true); // Afficher la modale de succès
-  //     fnSingleSubscription(); // Recharger les données de l'abonnement
-  //   }
-  // }, [dataCreateSubscription, loadingCreateSubscription]); // Ajoutez une condition supplémentaire
-
   // Pour afficher une seule modale en fonction de la situation
   useEffect(() => {
     if (SingleSubscription?.plan_id === 2 && !isSubscriptionExpired()) {
@@ -106,13 +97,6 @@ const PricingPage = () => {
     loadingUpdateSubscription,
   ]);
 
-  // useEffect(() => {
-  //   if (dataCreateSubscription?.length > 0 && !loadingCreateSubscription) {
-  //     setShowSuccessAlert(true); // Afficher la modale de succès
-  //     fnSingleSubscription(); // Recharger les données de l'abonnement
-  //   }
-  // }, [dataCreateSubscription, loadingCreateSubscription]); // Ajoutez une condition supplémentaire
-
   // Fonction pour vérifier si l'abonnement est expiré
   const isSubscriptionExpired = useCallback(() => {
     if (!SingleSubscription || !SingleSubscription.end_date) return true;
@@ -124,7 +108,10 @@ const PricingPage = () => {
   // Validation avant de soumettre le paiement via PayPal
   const canSubmit = useCallback(() => {
     if (!user || !isLoaded || loadingSingleSubscription) return false;
-    if (SingleSubscription?.plan_id === 2 && !isSubscriptionExpired()) {
+    if (
+      SingleSubscription?.plan_id === planIdMap.Pro &&
+      !isSubscriptionExpired()
+    ) {
       setShowAlreadySubscribed(true); // Afficher la modale si déjà abonné au plan Pro
       return false;
     }
@@ -140,8 +127,7 @@ const PricingPage = () => {
 
   // Fonction pour gérer la soumission de l'abonnement après le paiement
   const handleSubmit = useCallback(async () => {
-    console.log("handleSubmit");
-
+    // Assurer que l'utilisateur est bien chargé
     if (!user || !user.id) {
       console.error("User not authenticated");
       return;
@@ -149,28 +135,6 @@ const PricingPage = () => {
 
     // Vérifier si l'utilisateur est éligible à la création d'un abonnement
     if (!canSubmit()) return;
-
-    // Assurer que l'utilisateur est bien chargé
-    // if (!isLoaded || !user) {
-    //   console.error("L'utilisateur n'est pas encore chargé.");
-    //   return;
-    // }
-
-    // Gérer les erreurs de l'abonnement existant
-    // if (SingleSubscription && !SingleSubscription.success) {
-    //   console.error(SingleSubscription.message);
-    //   setErrorMessage(SingleSubscription.message);
-    //   setShowErrorAlert(true); // Afficher la modale d'erreur
-    //   return;
-    // }
-
-    // Si aucun abonnement actif n'est trouvé ou si l'abonnement est expiré, créez un nouvel abonnement
-    // Map selectedPlan to plan_id
-    const planIdMap = {
-      Pro: 2, // ID du plan "Pro"
-      Starter: 1, // ID du plan "Starter"
-      // Ajoute d'autres plans si nécessaire
-    };
 
     // Date de début de l'abonnement
     const startDate = new Date().toISOString();
@@ -188,16 +152,14 @@ const PricingPage = () => {
     renewalDate.setMonth(renewalDate.getMonth() + 1); // Exemple d'un renouvellement mensuel
     const renewalDateISOString = renewalDate.toISOString();
 
-    console.log("user_id", user.id);
-    console.log("plan_id", planIdMap[selectedPlan]);
-    console.log("statusSubscription", statusSubscription);
-    console.log("startDate", startDate);
-    console.log("endDateISOString", endDateISOString);
+    // console.log("user_id", user.id);
+    // console.log("plan_id", planIdMap[selectedPlan]);
+    // console.log("statusSubscription", statusSubscription);
+    // console.log("startDate", startDate);
+    // console.log("endDateISOString", endDateISOString);
 
     // Si l'abonnement existe mais est expiré, faites une mise à jour
     if (SingleSubscription && isSubscriptionExpired()) {
-      console.log("SingleSubscription", SingleSubscription);
-      console.log("isSubscriptionExpired", isSubscriptionExpired);
       try {
         console.log("UpdateSubscription");
         await fnUpdateSubscription({
@@ -212,7 +174,9 @@ const PricingPage = () => {
         }
       } catch (error) {
         console.error("Erreur lors de la mise à jour de l'abonnement:", error);
-        setErrorMessage("Erreur lors de la mise à jour de l'abonnement");
+        setErrorMessage(
+          error.message || "Erreur lors de la mise à jour de l'abonnement"
+        );
         setShowErrorAlert(true);
       }
     } else {
@@ -238,23 +202,7 @@ const PricingPage = () => {
         setShowErrorAlert(true);
       }
     }
-    // Appeler la fonction de création d'abonnement
-    // fnCreateSubscription({
-    //   user_id: user.id, // Récupérer l'ID utilisateur
-    //   plan_id: planIdMap[selectedPlan], // Utilise le plan sélectionné
-    //   status_subscription: statusSubscription,
-    //   start_date: startDate,
-    //   end_date: endDateISOString,
-    //   renewal_date: renewalDateISOString,
-    // }).then(() => {
-    //   if (dataCreateSubscription) {
-    //     setShowSuccessAlert(true); // Afficher la modale de succès
-    //   }
-    //   if (errorCreateSubscription) {
-    //     setErrorMessage(errorCreateSubscription.message);
-    //     setShowErrorAlert(true); // Afficher la modale d'erreur
-    //   }
-    // });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     user,
@@ -264,7 +212,6 @@ const PricingPage = () => {
     fnCreateSubscription,
     dataCreateSubscription,
     errorCreateSubscription,
-    // setShowLimitAlert,
     setErrorMessage,
     setShowErrorAlert,
   ]);

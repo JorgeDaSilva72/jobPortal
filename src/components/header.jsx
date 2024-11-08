@@ -32,12 +32,27 @@ const Header = () => {
   return (
     <>
       <nav className="flex items-center justify-between py-4">
-        <Link to="/">
+        <Link
+          to="/"
+          className="flex items-center transition duration-200 text-primary-500 hover:text-primary-700"
+        >
           <img
-            src="/logo.jpeg"
+            src="/logo-topaz-enhance-coupe.jpeg"
             className="h-10 rounded-full sm:h-14 md:h-18 lg:h-22 rounded-ful"
             alt="Logo"
           />
+          {/* Texte caché sur petit écran */}
+          <div className="flex flex-row ml-2 text-center md:items-center md:text-left">
+            <p className="text-xs font-bold text-primary sm:text-sm md:text-md lg:text-lg">
+              AFRIQUE&nbsp;
+            </p>
+            <p className="text-xs font-bold text-primary sm:text-sm md:text-md lg:text-lg">
+              AVENIR&nbsp;
+            </p>
+            <p className="text-xs font-bold text-primary sm:text-sm md:text-md lg:text-lg">
+              EMPLOI&nbsp;
+            </p>
+          </div>
         </Link>
 
         <div className="flex gap-8">
